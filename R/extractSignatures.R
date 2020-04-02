@@ -23,7 +23,7 @@
 #' @export
 
 
-extractSignatures = function(mat, n = NULL, plotBestFitRes = FALSE, parallel = 4, pConstant = NULL){
+extractSignatures = function(mat, n = NULL, plotBestFitRes = FALSE, parallel = 4, pConstant = NULL, randSeed=123456, nRun=1){
 
     #suppressPackageStartupMessages(require(NMF, quietly = TRUE))
     #transpose matrix
@@ -57,9 +57,9 @@ extractSignatures = function(mat, n = NULL, plotBestFitRes = FALSE, parallel = 4
 
     message(paste0('-Running NMF for factorization rank: ', n))
     if(!is.null(parallel)){
-      conv.mat.nmf = NMF::nmf(x = mat, rank = n, .opt = paste0('P', parallel), seed = 123456)
+      conv.mat.nmf = NMF::nmf(x = mat, rank = n, .opt = paste0('P', parallel), seed = randSeed, nrun=nRun)
     }else{
-      conv.mat.nmf = NMF::nmf(x = mat, rank = n, seed = 123456)
+      conv.mat.nmf = NMF::nmf(x = mat, rank = n, seed = randSeed, nrun=nRun)
     }
 
     #Signatures
